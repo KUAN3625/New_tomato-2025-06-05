@@ -58,6 +58,7 @@ resetButton.addEventListener("click",() => {
 clearInterval(countdownInterval);
 countdownInterval = null; // 重置計時器
 timeLeft = 300; // 重置時間為 5 分鐘
+totalTime = 300;//重製圓環顯示
 timerDisplay.textContent = formatTime(timeLeft); // 更新顯示時間
 
 //圓環恢復
