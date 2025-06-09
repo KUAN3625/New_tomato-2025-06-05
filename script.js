@@ -25,14 +25,19 @@ timerDisplay.textContent = formatTime(timeLeft);
 //剛進網頁就顯示
 
 
-timerDisplay.addEventListener("click", () => {
+//📌以下點擊開始計時
+document.querySelector(".timer-ring").addEventListener("click", () => {
 
     if (countdownInterval !== null) return;
 
     countdownInterval = setInterval(() => {
         timeLeft--;//📌每秒減1
 
+        //以下圖片切換
+        document.querySelector(".rabbit-sprite").classList.add("rabbit-run");
+
         //以下圓環
+
 
         const progressAngle = (timeLeft / totalTime) * 360;
 
@@ -54,38 +59,50 @@ timerDisplay.addEventListener("click", () => {
     }, 1000); // 每 1000ms 執行一次
 });
 
-resetButton.addEventListener("click",() => {
-clearInterval(countdownInterval);
-countdownInterval = null; // 重置計時器
-timeLeft = 300; // 重置時間為 5 分鐘
-totalTime = 300;//重製圓環顯示
-timerDisplay.textContent = formatTime(timeLeft); // 更新顯示時間
 
-//圓環恢復
-document.querySelector(".timer-ring").style.background = 
-`conic-gradient(#fff 360deg, rgb(255, 77, 77) 0deg)`
+
+
+//📌以下點擊重置計時
+resetButton.addEventListener("click", () => {
+
+    //以下圖片切換
+    document.querySelector(".rabbit-sprite").classList.remove("rabbit-run");
+    clearInterval(countdownInterval);
+    countdownInterval = null; // 重置計時器
+    timeLeft = 300; // 重置時間為 5 分鐘
+    totalTime = 300;//重製圓環顯示
+    timerDisplay.textContent = formatTime(timeLeft); // 更新顯示時間
+
+    //圓環恢復
+    document.querySelector(".timer-ring").style.background =
+        `conic-gradient(#fff 360deg, rgb(255, 77, 77) 0deg)`
 
 })
 
 
 //以下切換
 
-document.querySelectorAll('.switch-ball').forEach(ball =>{
-ball.addEventListener('click', () => {
+document.querySelectorAll('.switch-ball').forEach(ball => {
+    ball.addEventListener('click', () => {
 
-    clearInterval(countdownInterval);
-    countdownInterval = null;//重製
+        clearInterval(countdownInterval);
+        countdownInterval = null;//重製
 
-    const newMinutes = parseInt(ball.dataset.minutes);
-    timeLeft = newMinutes*60; // 轉換為秒
-    totalTime = timeLeft; // 更新總時間
+        const newMinutes = parseInt(ball.dataset.minutes);
+        timeLeft = newMinutes * 60; // 轉換為秒
+        totalTime = timeLeft; // 更新總時間
 
 
-    //更新圓環&顯示
-timerDisplay.textContent = formatTime(timeLeft);
-document.querySelector(".timer-ring").style.background = 
-`conic-gradient(#fff 360deg, rgb(255, 77, 77) 0deg)`;
-});
+        //更新圖片&圓環&顯示
+
+
+        document.querySelector(".rabbit-sprite").classList.remove("rabbit-run");
+
+
+        timerDisplay.textContent = formatTime(timeLeft);
+        document.querySelector(".timer-ring").style.background =
+            `conic-gradient(#fff 360deg, rgb(255, 77, 77) 0deg)`;
+    });
 
 });
 
