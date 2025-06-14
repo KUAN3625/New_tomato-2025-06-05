@@ -77,49 +77,59 @@ document.querySelectorAll('.switch-ball').forEach(ball => {
 
 // === 拖曳調整時間，拖動結束後自動倒數，允許取消 ===
 // === 拖曳調整時間，拖動結束後自動倒數，允許取消 ===
+const dragWrapper = document.querySelector('.drag-wrapper');
+
+dragWrapper.addEventListener('mousedown', handleStart);
+dragWrapper.addEventListener('touchstart', handleStart);
+
+document.addEventListener('mousemove', handleMove);
+document.addEventListener('touchmove', handleMove, { passive: false });
+
+document.addEventListener('mouseup', handleEnd);
+document.addEventListener('touchend', handleEnd);
+
+
+
 let isDragging = false;
 let startX = 0;
 let longPressTimeout = null;
+let preview = document.getElementById("time-preview");
 
-const dragWrapper = document.querySelector('.drag-wrapper');
-const preview = document.getElementById("time-preview");
+function getClientX(event) {
+    return event.touches ? event.touches[0].clientX : event.clientX;
+}
 
-// 長按觸發拖曳
-dragWrapper.addEventListener('mousedown', (e) => {
-    if (countdownInterval !== null) return; // 倒數中不能拖
+function handleStart(e) {
+    if (countdownInterval !== null) return;
     longPressTimeout = setTimeout(() => {
         isDragging = true;
-        startX = e.clientX;
+        startX = getClientX(e);
         document.body.style.cursor = 'grabbing';
         preview.style.opacity = '1';
-    }, 100); // 長按 0.5 秒才啟動
-});
+    }, 500);
+}
 
-// 若提前放開或移出則取消長按
-dragWrapper.addEventListener('mouseup', () => clearTimeout(longPressTimeout));
-dragWrapper.addEventListener('mouseleave', () => clearTimeout(longPressTimeout));
-
-document.addEventListener('mousemove', (e) => {
+function handleMove(e) {
     if (!isDragging) return;
-    const dx = e.clientX - startX;
+    const dx = getClientX(e) - startX;
     dragWrapper.style.transform = `translateX(${dx}px)`;
 
     const deltaMinutes = Math.round(dx / 5);
     const currentMinutes = Math.floor(timeLeft / 60);
     const previewMinutes = Math.max(1, Math.min(60, currentMinutes + deltaMinutes));
-
     preview.textContent = `${previewMinutes}`;
-    preview.style.opacity = '1';
-});
+}
 
-document.addEventListener('mouseup', (e) => {
+function handleEnd(e) {
+    clearTimeout(longPressTimeout);
     if (!isDragging) return;
+
     isDragging = false;
     document.body.style.cursor = 'default';
     dragWrapper.style.transform = `translateX(0)`;
     preview.style.opacity = '0';
 
-    const dx = e.clientX - startX;
+    const dx = getClientX(e) - startX;
     const deltaMinutes = Math.round(dx / 5);
     const currentMinutes = Math.floor(timeLeft / 60);
     const newMinutes = Math.max(1, Math.min(60, currentMinutes + deltaMinutes));
@@ -130,15 +140,12 @@ document.addEventListener('mouseup', (e) => {
 
     // ✅ 直接啟動倒數
     document.querySelector(".rabbit-sprite").classList.add("rabbit-run");
-
     countdownInterval = setInterval(() => {
         timeLeft--;
         timerDisplay.textContent = formatTime(timeLeft);
-
         const progressAngle = (timeLeft / totalTime) * 360;
         document.querySelector(".timer-ring").style.background =
             `conic-gradient(rgb(255, 77, 77) ${progressAngle}deg, #fff 0deg)`;
-
         if (timeLeft <= 0) {
             clearInterval(countdownInterval);
             countdownInterval = null;
@@ -146,4 +153,4 @@ document.addEventListener('mouseup', (e) => {
             alert("你做到了！");
         }
     }, 1000);
-});
+}
