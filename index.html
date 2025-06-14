@@ -12,23 +12,18 @@
   <body>
 <div class="container">
 
-  <div class="timer-wrapper"><!-- 控制區塊：圓環與調整 -->
+<div class="timer-wrapper">
+  
+  <!-- 拖曳預覽數字（脫離 drag-wrapper，不會被拖動） -->
+  <div class="time-preview" id="time-preview"></div>
 
-    <!-- 拖曳圓環與時間顯示 -->
-    <div class="drag-wrapper">
-      <div class="time-preview" id="time-preview"></div>
-      <div class="timer-ring">
-        <div id="timer" class="timer">25:00</div>
-      </div>
+  <div class="drag-wrapper">
+    <div class="timer-ring">
+      <div class="timer" id="timer">25:00</div>
     </div>
-
-    <!-- 若未來開放小圓球切換時間，可以啟用這段 -->
-    <!--
-    <div class="switch-ball left-ball" data-minutes="15"></div>
-    <div class="switch-ball right-ball" data-minutes="30"></div>
-    -->
-
   </div>
+</div>
+
 
   <!-- 重製按鈕 -->
   <div class="controls">
@@ -43,7 +38,5 @@
 </div>
 
 <script src="script.js"></script>
-
-    <script src="script.js"></script>
   </body>
 </html>
