@@ -52,7 +52,7 @@ width: 60dvw;
     margin-bottom: 1.5rem;
     position: relative;
       cursor: pointer;
-
+transition: transform 0.3s ease;
     background: conic-gradient(#000000 0deg, #ffffff 0deg);
     /*動態加裝*/
 }
@@ -166,6 +166,10 @@ width: 60dvw;
     /*圓球大小*/
 
 }
+.drag-wrapper {
+  transition: transform 0.3s ease;
+}
+
 
 .controls button{
 font-size: 0.9rem;
@@ -173,6 +177,23 @@ padding: 0.4rem 1rem;
 
 
 }
+
+
+.time-preview {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.2rem;
+  color: #ffffff;
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 0.3rem 0.7rem;
+  border-radius: 8px;
+  pointer-events: none;
+  z-index: 99;
+  display: none;
+}
+
 
 
 }

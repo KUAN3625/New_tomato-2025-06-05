@@ -10,31 +10,39 @@
 
   <!--container=容器核心-->
   <body>
-    <div class="container">
+<div class="container">
 
-      <div class="timer-wrapper"><!-- 15 圓環 30 5-->
+  <div class="timer-wrapper"><!-- 控制區塊：圓環與調整 -->
 
-        
-<div class="switch-ball left-ball" data-minutes="15"></div>
-
-<div class="timer-ring">
+    <!-- 拖曳圓環與時間顯示 -->
+    <div class="drag-wrapper">
+      <div class="time-preview" id="time-preview"></div>
+      <div class="timer-ring">
         <div id="timer" class="timer">25:00</div>
       </div>
+    </div>
 
-<div class="switch-ball right-ball" data-minutes="30"></div>
-      </div>
+    <!-- 若未來開放小圓球切換時間，可以啟用這段 -->
+    <!--
+    <div class="switch-ball left-ball" data-minutes="15"></div>
+    <div class="switch-ball right-ball" data-minutes="30"></div>
+    -->
 
-  <!-- 重製-->
-      <div class="controls">
-        <button id="reset">↺</button>
-      </div>
+  </div>
 
-<div class="bottom-deco">
+  <!-- 重製按鈕 -->
+  <div class="controls">
+    <button id="reset">↺</button>
+  </div>
 
-<div class="rabbit-sprite"></div>
+  <!-- 裝飾用兔子 -->
+  <div class="bottom-deco">
+    <div class="rabbit-sprite"></div>
+  </div>
+
 </div>
 
-    </div>
+<script src="script.js"></script>
 
     <script src="script.js"></script>
   </body>
